@@ -1,3 +1,4 @@
+
 def solution(pipes):
 	"""
 	Returns the area of water
@@ -36,5 +37,5 @@ def solution(pipes):
 		
 	return area  # return answer
 
-array = [0,1,0,2,1,0,1,3,2,1,2,1]
+array = [0,1,0,2,1,0,1,3,2,1,2,1,8,7]
 solution(array)
