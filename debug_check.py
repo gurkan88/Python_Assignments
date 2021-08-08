@@ -1,28 +1,26 @@
-text = input('Enter a text > ')
-liste = ['(', '{', '[', ')', '}', ']']
-dictt = {'(':')', '{':'}', '[':']', ')':'(', '}':'{', ']':'['}
-leng = len(text)
-result = True
-for i in text:
-    if i in liste:
-        sayi_1 = text.count(i)
-        x = text.find(i)
-        tersi = dictt[i]
-        if tersi in text:
-            sayi_2 = text.count(tersi)
-            y = text[::-1].find(tersi)
-            y = leng - y - 1
-            if i == '(' or i == '{' or i == '[':
-                if sayi_1 !=sayi_2 or x > y or not (y - x) % 2:
-                    result = False
-                    break
-            else:
-                if y > x:
-                    if i not in text[y + 1:]:
-                        result = False
-                        break
-        else:
-            result = False
-    else:
-        result = False
-print(result)
+def prime_factors(num):
+    factors = []
+    prime_numbers = []
+    num12 = num
+    i = 2
+    for i in range(2,num):
+        if num % i == 0:
+            factors.append(i)
+            num /= i
+            while num % i == 0:
+                factors.append(i)
+                num /= i
+                if num % i != 0: break
+    for j in range(2,int(num12)):
+        count = 0
+        for k in range(2,j+1):
+            if j % k == 0:
+                count += 1
+        if not count >= 2:
+            prime_numbers.append(j)
+    for m in factors:
+        if m not in prime_numbers:
+            factors.remove(m)
+    return num12
+
+prime_factors(128000)
