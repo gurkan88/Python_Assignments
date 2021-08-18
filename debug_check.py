@@ -1,27 +1,30 @@
-def lcm(nums):
-    lcm1 = dict()
-    factors = []
-    result = 1
-    for i in nums :
-        key = i
-        lcm1.update({i : []})
-        for j in range(2,i) :
-            if i % j == 0 :
-                i /= j
-                lcm1[key].append(j)
-                while i % j == 0 :
-                    i /= j
-                    lcm1[key].append(j)
-    for k in lcm1.values() :
-        factors += k 
-    factors = set(factors)
+def permutations(list1):
+    factorial = 1
+    for i in range(1,len(list1)+1):
+        factorial *= i 
+    num_of_rows = int(factorial / len(list1))
+    output = []
+    for i in range(factorial):
+        output.append([])
 
-    for k in factors :
-        number_of_factors = list(map(lambda x : x.count(k), lcm1.values()))
-        result *= k ** max(number_of_factors)
+    index1 = 0
+    y = 0
+    u = 0
+    w = len(list1) - 1
+    while y < len(list1) - 2 :
+        while u < len(list1):
+            for k in range(index1,index1+num_of_rows):
+                output[k].append(list1[u])
+            index1 += num_of_rows
+            if u+1 != len(list1) : u += 1
+            else : u = 0
+        index1 = 0
+        y += 1
+        num_of_rows = int(num_of_rows / w)
+        w -= 1
 
-    return result
-            
+    
+    return output
 
-v = [5,5,5]
-lcm(v)
+lst = [1,2,3,4,5]
+permutations(lst)
