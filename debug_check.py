@@ -1,21 +1,24 @@
-def multiply_by_11(n):
-    x = "0"
-    result = ""
-    n1 = "".join(("0",n))
-    n2 = n + "0"
-    for i,j in zip(n1[::-1],n2[::-1]) :
-        if int(i) + int(j) + int(x) < 10 :
-            result = "".join((str(int(i) + int(j) + int(x)), result))
-            x = "0"
-        else :
-            sum1 = int(i) + int(j) + int(x)
-            result = "".join((str(sum1)[-1], result))
-            x = f"{sum1 // 10}"
-    if x != 0 or x != "0":
-        result = "".join((str(x), result))
-    return result  
+def get_lucky_number(size, nth):
+    list1 = list(range(1,size+1))
+    check_list = list1.copy()
+    filter1 = 1
+    index = filter1
+    filter_inter = list1[filter1] 
+    while True:
+        list2 = []
+        for i in range(1,len(list1)):
+            list2.append(list1[index])
+            index += filter_inter 
+            if index >= len(list1):
+                break
+        list1 = list(set(list1).difference(list2))
+        if check_list[filter1] == list1[filter1]: 
+            filter1 += 1
+            filter_inter = list1[filter1]
+        if list1[filter1] > len(list1) : 
+            break
+        index = filter_inter -1
 
+    return list1
 
-
-
-multiply_by_11("86")
+get_lucky_number(25,6)
