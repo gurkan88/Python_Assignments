@@ -1,39 +1,26 @@
-def truncatable(n):
-    numR, numL = str(n), str(n)
-    listR, listL = [numR], [numL]
-    for i in range(len(str(n))):
-        numR = numR.rstrip(numR[-1])
-        if numR != "":  
-            listR.append(numR)
-    for i in range(len(str(n))):
-        numL = numL.lstrip(numL[0])
-        if numL != "": 
-            listL.append(numL)
+def polybius(text):
+    text = text.upper().replace("J","I")
+    import string
+    upper = string.ascii_uppercase.replace("IJ","I")
+    dict1 = {}
+    for j in range(0,25):
+        row = j // 5 + 1
+        column = j % 5 + 1
+        dict1[f"{row}{column}"] = upper[j]
+    if text[0].isalpha():
+        dict1 = {str(k): str(v) for v, k in dict1.items()}
+        for i in text:
+            if i != " ": text = text.replace(i, dict1[i])
+        return text
+    else:
+        decode = [i for i in text.split(" ") if i]
+        for i in range(len(decode)) :
+            n = 2
+            decode[i] = [decode[i][j:j+n] for j in range(0,len(decode[i]),2)]
+            for k in range(int(len(decode[i])/2)):
+                decode[i][k] = dict1[decode[i][k]]
+           
 
-    listL_check = []
-    for i in listL:
-        if i[0] != 0:
-            i = int(i)
-            prime_check = False
-            if (i != 1) and (i != 0):
-                for j in range(2,i):
-                    if (i % j == 0): prime_check = True
-                if prime_check == False : listL_check.append(str(i))
-    listR_check = []
-    for i in listR:
-        if i[0] != 0:
-            i = int(i)
-            prime_check = False
-            if (i != 1) and (i != 0):
-                for j in range(2,i):
-                    if (i % j == 0): prime_check = True
-                if prime_check == False : listR_check.append(str(i))
+    return decode
 
-    if (listL_check == listL) and (listR_check == listR):
-        return "both"
-    elif (listL_check == listL): return "left"
-    elif (listR_check == listR): return "right"
-    else : return False
-
-
-truncatable(7331)
+polybius("2324 4423154215")
